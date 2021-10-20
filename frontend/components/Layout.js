@@ -7,16 +7,18 @@ import { unsetToken } from "../lib/auth";
 import { Container, Nav, NavItem } from "reactstrap";
 import defaultPage from "../hocs/defaultPage";
 import Cookie from "js-cookie";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
 
-const colors = (darkTheme) => (
+const colors = (darkMode) => (
   <style jsx>
     {`
       :root {
-        --primary: ${darkTheme ? "#f5f5f5" : "#343a40"};
-        --reversePrimary: ${darkTheme ? "#343a40" : "#f5f5f5"};
+        --primary: ${darkMode ? "#f5f5f5" : "#343a40"};
+        --reversePrimary: ${darkMode ? "#343a40" : "#f5f5f5"};
         --secondary: #007bff;
-        --mainText: ${darkTheme ? "white" : "black"};
-        --secondaryText: ${darkTheme ? "black" : "white"};
+        --mainText: ${darkMode ? "white" : "black"};
+        --secondaryText: ${darkMode ? "black" : "white"};
       }
 
       body {
@@ -38,10 +40,24 @@ const colors = (darkTheme) => (
 
 class Layout extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
-      darkTheme: false,
+      darkMode: false,
     };
+  }
+
+  componentDidMount() {
+    this.loadThemeData();
+  }
+
+  async loadThemeData() {
+    const res = await fetch("http://localhost:1337/configurations/1");
+    const json = await res.json();
+
+    this.setState({
+      darkMode: json.darkMode,
+    });
   }
   static async getInitialProps({ req }) {
     let pageProps = {};
@@ -73,7 +89,7 @@ class Layout extends React.Component {
           />
           <script src="https://js.stripe.com/v3" />
         </Head>
-        {colors(this.state.darkTheme)}
+        {colors(this.state.darkMode)}
         <header>
           <Nav className="navbar navbar-dark">
             <NavItem>
