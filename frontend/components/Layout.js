@@ -8,9 +8,40 @@ import { Container, Nav, NavItem } from "reactstrap";
 import defaultPage from "../hocs/defaultPage";
 import Cookie from "js-cookie";
 
+const colors = (darkTheme) => (
+  <style jsx>
+    {`
+      :root {
+        --primary: ${darkTheme ? "#f5f5f5" : "#343a40"};
+        --reversePrimary: ${darkTheme ? "#343a40" : "#f5f5f5"};
+        --secondary: #007bff;
+        --mainText: ${darkTheme ? "white" : "black"};
+        --secondaryText: ${darkTheme ? "black" : "white"};
+      }
+
+      body {
+        background-color: var(--reversePrimary);
+      }
+      .navbar {
+        background-color: var(--primary);
+      }
+      .navbar a {
+        color: var(--secondaryText) !important;
+      }
+
+      .restaurant-name {
+        color: var(--mainText) !important;
+      }
+    `}
+  </style>
+);
+
 class Layout extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      darkTheme: false,
+    };
   }
   static async getInitialProps({ req }) {
     let pageProps = {};
@@ -20,9 +51,11 @@ class Layout extends React.Component {
 
     return { pageProps, isAuthenticated };
   }
+
   render() {
     const { isAuthenticated, children } = this.props;
     const title = "Welcome to Nextjs";
+    console.log();
     return (
       <div>
         <Head>
@@ -40,8 +73,9 @@ class Layout extends React.Component {
           />
           <script src="https://js.stripe.com/v3" />
         </Head>
+        {colors(this.state.darkTheme)}
         <header>
-          <Nav className="navbar navbar-dark bg-dark">
+          <Nav className="navbar navbar-dark">
             <NavItem>
               <Link href="/">
                 <a className="navbar-brand">Home</a>
@@ -80,7 +114,7 @@ class Layout extends React.Component {
           </Nav>
         </header>
         <Container>{children}</Container>
-        {/* <footer className="footer">
+        <footer className="footer">
           {"Strapi footer"}
           <style jsx>
             {`
@@ -90,7 +124,8 @@ class Layout extends React.Component {
                 width: 100%;
                 height: 60px;
                 line-height: 60px;
-                background-color: #f5f5f5;
+                background-color: var(--primary);
+                color: var(--secondaryText);
               }
               a:hover {
                 cursor: pointer;
@@ -98,7 +133,7 @@ class Layout extends React.Component {
               }
             `}
           </style>
-        </footer> */}
+        </footer>
       </div>
     );
   }

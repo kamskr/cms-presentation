@@ -15,7 +15,7 @@ import {
   CardText,
   CardTitle,
   Col,
-  Row
+  Row,
 } from "reactstrap";
 import Cart from "../components/Cart/Cart";
 import defaultPage from "../hocs/defaultPage";
@@ -33,22 +33,19 @@ class Restaurants extends React.Component {
       data: { loading, error, restaurant },
       router,
       context,
-      isAuthenticated
+      isAuthenticated,
     } = this.props;
     if (error) return "Error Loading Dishes";
 
     if (restaurant) {
       return (
         <>
-          <h1>{restaurant.name}</h1>
+          <h1 className="restaurant-name">{restaurant.name}</h1>
           <Row>
             <Col xs="9" style={{ padding: 0 }}>
               <div style={{ display: "inline-block" }} className="h-100">
-                {restaurant.dishes.map(res => (
-                  <Card
-                    style={{ width: "30%", margin: "0 10px" }}
-                    key={res.id}
-                  >
+                {restaurant.dishes.map((res) => (
+                  <Card style={{ width: "30%", margin: "0 10px" }} key={res.id}>
                     <CardImg
                       top={true}
                       style={{ height: 250 }}
@@ -106,7 +103,7 @@ class Restaurants extends React.Component {
 }
 
 const GET_RESTAURANT_DISHES = gql`
-  query($id: ID!) {
+  query ($id: ID!) {
     restaurant(id: $id) {
       id
       name
@@ -130,13 +127,13 @@ export default compose(
   defaultPage,
   withContext,
   graphql(GET_RESTAURANT_DISHES, {
-    options: props => {
+    options: (props) => {
       return {
         variables: {
-          id: props.router.query.id
-        }
+          id: props.router.query.id,
+        },
       };
     },
-    props: ({ data }) => ({ data })
+    props: ({ data }) => ({ data }),
   })
 )(Restaurants);
