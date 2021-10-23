@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "configurations",
+  "info": {
+    "name": "configurations"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "darkMode": {
+      "type": "boolean"
+    },
+    "menu": {
+      "type": "component",
+      "repeatable": true,
+      "component": "menu.menu"
+    }
+  }
+}

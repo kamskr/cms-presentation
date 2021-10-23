@@ -43,7 +43,7 @@ class Layout extends React.Component {
     console.log(props);
     super(props);
     this.state = {
-      darkMode: false,
+      config: {},
     };
   }
 
@@ -52,13 +52,14 @@ class Layout extends React.Component {
   }
 
   async loadThemeData() {
-    const res = await fetch("http://localhost:1337/configurations/1");
-    const json = await res.json();
+    const res = await fetch("http://localhost:1337/configurations");
+    const config = await res.json();
 
     this.setState({
-      darkMode: json.darkMode,
+      config,
     });
   }
+
   static async getInitialProps({ req }) {
     let pageProps = {};
     if (Component.getInitialProps) {
@@ -89,7 +90,7 @@ class Layout extends React.Component {
           />
           <script src="https://js.stripe.com/v3" />
         </Head>
-        {colors(this.state.darkMode)}
+        {colors(this.state.config.darkMode)}
         <header>
           <Nav className="navbar navbar-dark">
             <NavItem>
