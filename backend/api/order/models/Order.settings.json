@@ -1,18 +1,15 @@
 {
-  "connection": "default",
+  "kind": "collectionType",
   "collectionName": "orders",
   "info": {
-    "name": "order",
-    "description": ""
+    "name": "order"
   },
   "options": {
     "increments": true,
-    "timestamps": [
-      "created_at",
-      "updated_at"
-    ],
-    "comment": ""
+    "timestamps": true,
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "address": {
       "type": "string"
@@ -27,10 +24,10 @@
       "type": "integer"
     },
     "state": {
-      "type": "text"
+      "type": "richtext"
     },
     "token": {
-      "type": "text"
+      "type": "richtext"
     }
   }
 }

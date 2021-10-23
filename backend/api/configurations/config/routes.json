@@ -3,47 +3,23 @@
     {
       "method": "GET",
       "path": "/configurations",
-      "handler": "Configurations.find",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/configurations/count",
-      "handler": "Configurations.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/configurations/:id",
-      "handler": "Configurations.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/configurations",
-      "handler": "Configurations.create",
+      "handler": "configurations.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/configurations/:id",
-      "handler": "Configurations.update",
+      "path": "/configurations",
+      "handler": "configurations.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/configurations/:id",
-      "handler": "Configurations.delete",
+      "path": "/configurations",
+      "handler": "configurations.delete",
       "config": {
         "policies": []
       }

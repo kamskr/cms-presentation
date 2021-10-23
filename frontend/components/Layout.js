@@ -27,7 +27,8 @@ const colors = (darkMode) => (
       .navbar {
         background-color: var(--primary);
       }
-      .navbar a {
+      .navbar a,
+      .menu-user-name {
         color: var(--secondaryText) !important;
       }
 
@@ -43,7 +44,7 @@ class Layout extends React.Component {
     console.log(props);
     super(props);
     this.state = {
-      darkMode: false,
+      config: {},
     };
   }
 
@@ -52,13 +53,14 @@ class Layout extends React.Component {
   }
 
   async loadThemeData() {
-    const res = await fetch("http://localhost:1337/configurations/1");
-    const json = await res.json();
-
+    const res = await fetch("http://localhost:1337/configurations");
+    const config = await res.json();
+    console.log(config);
     this.setState({
-      darkMode: json.darkMode,
+      config,
     });
   }
+
   static async getInitialProps({ req }) {
     let pageProps = {};
     if (Component.getInitialProps) {
@@ -71,7 +73,8 @@ class Layout extends React.Component {
   render() {
     const { isAuthenticated, children } = this.props;
     const title = "Welcome to Nextjs";
-    console.log();
+    console.log(this.state.config.menu);
+
     return (
       <div>
         <Head>
@@ -89,18 +92,21 @@ class Layout extends React.Component {
           />
           <script src="https://js.stripe.com/v3" />
         </Head>
-        {colors(this.state.darkMode)}
+        {colors(this.state.config.darkMode)}
         <header>
           <Nav className="navbar navbar-dark">
-            <NavItem>
-              <Link href="/">
-                <a className="navbar-brand">Home</a>
-              </Link>
-            </NavItem>
+            {this.state.config.menu &&
+              this.state.config.menu.map((menuItem) => (
+                <NavItem key={menuItem.Path}>
+                  <Link href={menuItem.Path}>
+                    <a className="navbar-brand">{menuItem.Label}</a>
+                  </Link>
+                </NavItem>
+              ))}
             {isAuthenticated ? (
               <>
                 <NavItem className="ml-auto">
-                  <span style={{ color: "white", marginRight: 30 }}>
+                  <span style={{ marginRight: 30 }} className="menu-user-name">
                     {this.props.loggedUser}
                   </span>
                 </NavItem>
