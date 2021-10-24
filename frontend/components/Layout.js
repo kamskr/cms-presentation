@@ -136,7 +136,7 @@ class Layout extends React.Component {
           </Nav>
         </header>
         <Container>{children}</Container>
-        <footer className="footer">
+        {/* <footer className="footer">
           {"Strapi footer"}
           <style jsx>
             {`
@@ -155,7 +155,7 @@ class Layout extends React.Component {
               }
             `}
           </style>
-        </footer>
+        </footer> */}
       </div>
     );
   }
