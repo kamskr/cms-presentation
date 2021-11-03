@@ -1,5 +1,5 @@
 {
-  "connection": "default",
+  "kind": "collectionType",
   "collectionName": "restaurants",
   "info": {
     "name": "restaurant",
@@ -8,23 +8,31 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "comment": ""
+    "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string"
     },
     "description": {
-      "type": "text"
+      "type": "richtext"
     },
     "image": {
       "model": "file",
       "via": "related",
-      "plugin": "upload"
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
     },
     "dishes": {
-      "collection": "dish",
-      "via": "restaurant"
+      "via": "restaurant",
+      "collection": "dish"
     }
   }
 }
